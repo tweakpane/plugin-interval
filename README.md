@@ -26,7 +26,7 @@ const pane = new Tweakpane();
 ```
 
 
-## Uage
+## Usage
 ```js
 const PARAMS = {
   range: {min: 20, max: 80},
