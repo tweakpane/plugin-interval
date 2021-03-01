@@ -6,6 +6,8 @@ import Postcss from 'postcss';
 import Cleanup from 'rollup-plugin-cleanup';
 import {terser as Terser} from 'rollup-plugin-terser';
 
+import Package from './package.json';
+
 async function compileCss() {
 	const css = NodeSass.renderSync({
 		file: 'src/sass/plugin.scss',
@@ -48,15 +50,15 @@ export default async () => {
 
 	const css = await compileCss();
 	return {
-		input: 'src/plugin.ts',
+		input: 'src/index.ts',
 		external: ['tweakpane'],
 		output: {
-			file: `dist/tweakpane-plugin-template${postfix}.js`,
+			file: `dist/${Package.name}${postfix}.js`,
 			format: 'umd',
 			globals: {
 				tweakpane: 'Tweakpane',
 			},
-			name: 'TweakpanePluginTemplate',
+			name: 'TweakpanePluginInterval',
 		},
 		plugins: getPlugins(css, production),
 

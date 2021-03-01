@@ -6,18 +6,22 @@
 </head>
 <body>
 	<script src="../node_modules/tweakpane/dist/tweakpane.js"></script>
-	<script src="../dist/tweakpane-plugin-template.js"></script>
+	<script src="../dist/tweakpane-plugin-interval.js"></script>
 	<script>
 		const params = {
-			prop: 3,
+			test: {min: 10, max: 90},
 		};
-		const pane = new Tweakpane();
 
-		// TODO: Update parameters for your plugin
-		pane.addInput({test: 3}, 'test', {
-			view: 'dots',
-		}).on('change', (ev) => {
-			console.log(ev);
+		const pane = new Tweakpane();
+		pane.on('change', (ev) => {
+			console.log(ev.value);
+		});
+
+		pane.addInput(params, 'test');
+		pane.addInput(params, 'test', {
+			min: 0,
+			max: 100,
+			step: 1,
 		});
 	</script>
 </body>
