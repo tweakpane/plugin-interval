@@ -1,4 +1,3 @@
-import {Interval} from 'model/interval';
 import {Value} from 'tweakpane/lib/plugin/common/model/value';
 import {
 	constrainRange,
@@ -6,6 +5,8 @@ import {
 } from 'tweakpane/lib/plugin/common/number-util';
 import {ClassName} from 'tweakpane/lib/plugin/common/view/class-name';
 import {ValueView} from 'tweakpane/lib/plugin/common/view/value';
+
+import {Interval} from '../model/interval';
 
 interface Config {
 	maxValue: number;

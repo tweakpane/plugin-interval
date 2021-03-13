@@ -1,4 +1,3 @@
-import {Interval} from 'model/interval';
 import {ValueController} from 'tweakpane/lib/plugin/common/controller/value';
 import {Value} from 'tweakpane/lib/plugin/common/model/value';
 import {mapRange} from 'tweakpane/lib/plugin/common/number-util';
@@ -8,6 +7,7 @@ import {
 	PointerHandlerEvent,
 } from 'tweakpane/lib/plugin/common/view/pointer-handler';
 
+import {Interval} from '../model/interval';
 import {RangeSliderView} from '../view/range-slider';
 
 interface Config {

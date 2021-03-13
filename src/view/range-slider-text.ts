@@ -1,9 +1,9 @@
-import {Interval} from 'model/interval';
 import {Value} from 'tweakpane/lib/plugin/common/model/value';
 import {ClassName} from 'tweakpane/lib/plugin/common/view/class-name';
 import {ValueView} from 'tweakpane/lib/plugin/common/view/value';
 import {PointNdTextView} from 'tweakpane/lib/plugin/input-bindings/common/view/point-nd-text';
 
+import {Interval} from '../model/interval';
 import {RangeSliderView} from './range-slider';
 
 interface Config {

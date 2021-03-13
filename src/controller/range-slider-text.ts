@@ -1,10 +1,10 @@
-import {Interval, IntervalAssembly} from 'model/interval';
 import {ValueController} from 'tweakpane/lib/plugin/common/controller/value';
 import {Formatter} from 'tweakpane/lib/plugin/common/converter/formatter';
 import {Parser} from 'tweakpane/lib/plugin/common/converter/parser';
 import {Value} from 'tweakpane/lib/plugin/common/model/value';
-import {RangeSliderTextView} from 'view/range-slider-text';
 
+import {Interval, IntervalAssembly} from '../model/interval';
+import {RangeSliderTextView} from '../view/range-slider-text';
 import {PointNdTextControllerMod} from './point-nd-mod';
 import {RangeSliderController} from './range-slider';
 
@@ -45,5 +45,9 @@ export class RangeSliderTextController implements ValueController<Interval> {
 			sliderView: this.sc_.view,
 			textView: this.tc_.view,
 		});
+	}
+
+	public get textController(): PointNdTextControllerMod<Interval> {
+		return this.tc_;
 	}
 }

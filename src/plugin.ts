@@ -1,8 +1,3 @@
-import {IntervalConstraint} from 'constraint/interval';
-import {PointNdTextControllerMod} from 'controller/point-nd-mod';
-import {RangeSliderTextController} from 'controller/range-slider-text';
-import {intervalFromUnknown, writeInterval} from 'converter/interval';
-import {Interval, IntervalAssembly, IntervalObject} from 'model/interval';
 import {
 	CompositeConstraint,
 	findConstraint,
@@ -25,6 +20,12 @@ import {
 	getSuitableDecimalDigits,
 	getSuitableDraggingScale,
 } from 'tweakpane/lib/plugin/util';
+
+import {IntervalConstraint} from './constraint/interval';
+import {PointNdTextControllerMod} from './controller/point-nd-mod';
+import {RangeSliderTextController} from './controller/range-slider-text';
+import {intervalFromUnknown, writeInterval} from './converter/interval';
+import {Interval, IntervalAssembly, IntervalObject} from './model/interval';
 
 interface IntervalInputParams {
 	max?: number;

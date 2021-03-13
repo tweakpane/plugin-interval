@@ -1,5 +1,6 @@
-import {Interval} from 'model/interval';
 import {BindingTarget} from 'tweakpane/lib/plugin/common/binding/target';
+
+import {Interval} from '../model/interval';
 
 export function intervalFromUnknown(value: unknown): Interval {
 	return Interval.isObject(value)
