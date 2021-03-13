@@ -1,4 +1,5 @@
 import {IntervalConstraint} from 'constraint/interval';
+import {PointNdTextControllerMod} from 'controller/point-nd-mod';
 import {RangeSliderTextController} from 'controller/range-slider-text';
 import {intervalFromUnknown, writeInterval} from 'converter/interval';
 import {Interval, IntervalAssembly, IntervalObject} from 'model/interval';
@@ -15,7 +16,6 @@ import {
 import {Value} from 'tweakpane/lib/plugin/common/model/value';
 import {TpError} from 'tweakpane/lib/plugin/common/tp-error';
 import {InputBindingPlugin} from 'tweakpane/lib/plugin/input-binding';
-import {PointNdTextController} from 'tweakpane/lib/plugin/input-bindings/common/controller/point-nd-text';
 import {
 	createRangeConstraint,
 	createStepConstraint,
@@ -97,7 +97,7 @@ function createController(args: {document: Document; value: Value<Interval>}) {
 			getSuitableDecimalDigits(c.edge, midValue),
 		),
 	};
-	return new PointNdTextController(args.document, {
+	return new PointNdTextControllerMod(args.document, {
 		assembly: IntervalAssembly,
 		axes: [axis, axis],
 		parser: parseNumber,
