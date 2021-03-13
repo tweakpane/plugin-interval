@@ -1,7 +1,7 @@
 import {IntervalConstraint} from 'constraint/interval';
 import {RangeSliderTextController} from 'controller/range-slider-text';
+import {intervalFromUnknown, writeInterval} from 'converter/interval';
 import {Interval, IntervalAssembly, IntervalObject} from 'model/interval';
-import {intervalFromUnknown} from 'reader/interval';
 import {
 	CompositeConstraint,
 	findConstraint,
@@ -25,7 +25,6 @@ import {
 	getSuitableDecimalDigits,
 	getSuitableDraggingScale,
 } from 'tweakpane/lib/plugin/util';
-import {writeInterval} from 'writer/writer';
 
 interface IntervalInputParams {
 	max?: number;
