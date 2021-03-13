@@ -1,3 +1,5 @@
+import {PointNdAssembly} from 'tweakpane/lib/plugin/input-bindings/common/model/point-nd';
+
 export interface IntervalObject {
 	max: number;
 	min: number;
@@ -39,3 +41,8 @@ export class Interval {
 		};
 	}
 }
+
+export const IntervalAssembly: PointNdAssembly<Interval> = {
+	fromComponents: (comps) => new Interval(comps[0], comps[1]),
+	toComponents: (p) => [p.min, p.max],
+};

@@ -18,7 +18,14 @@ module.exports = {
 
 		'prettier/prettier': 'error',
 		'simple-import-sort/imports': 'error',
-		'@typescript-eslint/naming-convention': ['error'],
+		'@typescript-eslint/naming-convention': ['error', {
+			selector: 'variable',
+			format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
+			custom: {
+				regex: '^opt_',
+				match: false,
+			},
+		}],
 		'@typescript-eslint/explicit-function-return-type': 'off',
 		'@typescript-eslint/no-empty-function': 'off',
 		'@typescript-eslint/no-explicit-any': 'off',

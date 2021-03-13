@@ -1,7 +1,6 @@
 import {IntervalConstraint} from 'constraint/interval';
-import {IntervalTextController} from 'controller/interval-text';
 import {RangeSliderTextController} from 'controller/range-slider-text';
-import {Interval, IntervalObject} from 'model/interval';
+import {Interval, IntervalAssembly, IntervalObject} from 'model/interval';
 import {intervalFromUnknown} from 'reader/interval';
 import {
 	CompositeConstraint,
@@ -16,11 +15,16 @@ import {
 import {Value} from 'tweakpane/lib/plugin/common/model/value';
 import {TpError} from 'tweakpane/lib/plugin/common/tp-error';
 import {InputBindingPlugin} from 'tweakpane/lib/plugin/input-binding';
+import {PointNdTextController} from 'tweakpane/lib/plugin/input-bindings/common/controller/point-nd-text';
 import {
 	createRangeConstraint,
 	createStepConstraint,
 } from 'tweakpane/lib/plugin/input-bindings/number/plugin';
-import {getBaseStep, getSuitableDecimalDigits} from 'tweakpane/lib/plugin/util';
+import {
+	getBaseStep,
+	getSuitableDecimalDigits,
+	getSuitableDraggingScale,
+} from 'tweakpane/lib/plugin/util';
 import {writeInterval} from 'writer/writer';
 
 interface IntervalInputParams {
@@ -71,12 +75,14 @@ function createController(args: {document: Document; value: Value<Interval>}) {
 		throw TpError.shouldNeverHappen();
 	}
 
+	const midValue = (v.rawValue.min + v.rawValue.max) / 2;
 	const rc = c.edge && findConstraint(c.edge, RangeConstraint);
 	if (rc?.minValue !== undefined && rc?.maxValue !== undefined) {
 		return new RangeSliderTextController(args.document, {
 			baseStep: getBaseStep(c.edge),
+			draggingScale: getSuitableDraggingScale(rc, midValue),
 			formatter: createNumberFormatter(
-				getSuitableDecimalDigits(c.edge, (v.rawValue.min + v.rawValue.max) / 2),
+				getSuitableDecimalDigits(c.edge, midValue),
 			),
 			maxValue: rc.maxValue,
 			minValue: rc.minValue,
@@ -85,11 +91,16 @@ function createController(args: {document: Document; value: Value<Interval>}) {
 		});
 	}
 
-	return new IntervalTextController(args.document, {
+	const axis = {
 		baseStep: getBaseStep(c.edge),
+		draggingScale: midValue,
 		formatter: createNumberFormatter(
-			getSuitableDecimalDigits(c.edge, (v.rawValue.min + v.rawValue.max) / 2),
+			getSuitableDecimalDigits(c.edge, midValue),
 		),
+	};
+	return new PointNdTextController(args.document, {
+		assembly: IntervalAssembly,
+		axes: [axis, axis],
 		parser: parseNumber,
 		value: v,
 	});
