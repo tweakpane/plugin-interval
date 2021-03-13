@@ -57,13 +57,21 @@ export class RangeSliderController implements ValueController<Interval> {
 		return 0;
 	}
 
-	private valueFromData_(data: PointerData): number {
-		const p = (data.x + this.ofs_()) / data.bounds.width;
+	private valueFromData_(data: PointerData): number | null {
+		if (!data.point) {
+			return null;
+		}
+
+		const p = (data.point.x + this.ofs_()) / data.bounds.width;
 		return mapRange(p, 0, 1, this.minValue_, this.maxValue_);
 	}
 
 	private onPointerDown_(ev: PointerHandlerEvent) {
-		const p = ev.data.x / ev.data.bounds.width;
+		if (!ev.data.point) {
+			return;
+		}
+
+		const p = ev.data.point.x / ev.data.bounds.width;
 		const v = this.value.rawValue;
 		const pmin = mapRange(v.min, this.minValue_, this.maxValue_, 0, 1);
 		const pmax = mapRange(v.max, this.minValue_, this.maxValue_, 0, 1);
@@ -92,6 +100,10 @@ export class RangeSliderController implements ValueController<Interval> {
 
 	private onPointerMove_(ev: PointerHandlerEvent) {
 		const v = this.valueFromData_(ev.data);
+		if (v === null) {
+			return;
+		}
+
 		if (this.grabbing_ === 'min') {
 			this.value.rawValue = new Interval(v, this.value.rawValue.max);
 		} else if (this.grabbing_ === 'max') {

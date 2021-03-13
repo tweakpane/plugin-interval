@@ -27,7 +27,7 @@
     "coverage:report:xml": "TS_NODE_PROJECT='src/tsconfig.json' nyc --reporter=none --extension '.ts' --exclude '**/*-test.ts' mocha --require ts-node/register --reporter mocha-junit-reporter --reporter-options mochaFile=./test/results/results.xml 'src/**/*-test.ts'",
     "build": "run-p build:*",
     "build:dev": "rollup --config rollup.config.js",
-		"build:dts": "tsc --project src/tsconfig-dts.json",
+    "build:dts": "tsc --project src/tsconfig-dts.json",
     "build:prod": "rollup --config rollup.config.js --environment BUILD:production",
     "format": "run-p format:*",
     "format:scss": "prettier --parser scss --write 'src/sass/**/*.scss'",
@@ -66,6 +66,6 @@
     "typescript": "^3.9.9"
   },
   "peerDependencies": {
-    "tweakpane": "^2.0.0"
+    "tweakpane": "2.1.1"
   }
 }
