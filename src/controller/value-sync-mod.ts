@@ -49,6 +49,11 @@ export function connectValuesMod<T1, T2>({
 		preventFeedback(() => {
 			primary.rawValue = backward(primary, secondary);
 		});
+
+		// Re-update secondary to apply changes from primary constraint
+		preventFeedback(() => {
+			secondary.rawValue = forward(primary, secondary);
+		});
 	});
 
 	preventFeedback(() => {
