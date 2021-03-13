@@ -20,7 +20,7 @@
     "test:ts:dynamic": "TS_NODE_PROJECT='src/tsconfig.json' nyc --extension '.ts' mocha  -r tsconfig-paths/register -r ts-node/register 'src/**/*-test.ts'",
     "assets": "run-s clean build assets:version assets:zip",
     "assets:version": "node scripts/assets-append-version.js",
-    "assets:zip": "zip -j -r $(cat package.json | npx json name)-$(cat package.json | npx json version).zip dist",
+    "assets:zip": "zip -x '*types*' -j -r $(cat package.json | npx json name)-$(cat package.json | npx json version).zip dist",
     "clean": "rm -rf dist *.tgz *.zip",
     "coverage": "run-s coverage:report:*",
     "coverage:report:html": "nyc report --reporter=html --reporter=text --reporter=lcovonly --report-dir=test/coverage",
