@@ -5,6 +5,10 @@
 	padding-left: $slider-knob-width;
 	padding-right: $slider-knob-width;
 
+	&.#{$prefix}-v-disabled {
+		opacity: 0.5;
+	}
+
 	&_t {
 		height: calc(var(--unit-size));
 		position: relative;

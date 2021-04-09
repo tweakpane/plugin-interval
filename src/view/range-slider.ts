@@ -1,10 +1,9 @@
-import {Value} from 'tweakpane/lib/plugin/common/model/value';
-import {
-	constrainRange,
-	mapRange,
-} from 'tweakpane/lib/plugin/common/number-util';
-import {ClassName} from 'tweakpane/lib/plugin/common/view/class-name';
-import {ValueView} from 'tweakpane/lib/plugin/common/view/value';
+import {Value} from 'tweakpane/lib/common/model/value';
+import {ViewProps} from 'tweakpane/lib/common/model/view-props';
+import {constrainRange, mapRange} from 'tweakpane/lib/common/number-util';
+import {ClassName} from 'tweakpane/lib/common/view/class-name';
+import {bindClassModifier} from 'tweakpane/lib/common/view/reactive';
+import {View} from 'tweakpane/lib/common/view/view';
 
 import {Interval} from '../model/interval';
 
@@ -12,18 +11,19 @@ interface Config {
 	maxValue: number;
 	minValue: number;
 	value: Value<Interval>;
+	viewProps: ViewProps;
 }
 
 const className = ClassName('rsl');
 
-export class RangeSliderView implements ValueView<Interval> {
+export class RangeSliderView implements View {
 	public readonly element: HTMLElement;
-	public readonly value: Value<Interval>;
 	public readonly knobElements: [HTMLElement, HTMLElement];
 	public readonly barElement: HTMLElement;
 	public readonly trackElement: HTMLElement;
 	private readonly maxValue_: number;
 	private readonly minValue_: number;
+	private readonly value_: Value<Interval>;
 
 	constructor(doc: Document, config: Config) {
 		this.maxValue_ = config.maxValue;
@@ -31,9 +31,10 @@ export class RangeSliderView implements ValueView<Interval> {
 
 		this.element = doc.createElement('div');
 		this.element.classList.add(className());
+		bindClassModifier(config.viewProps, this.element);
 
-		this.value = config.value;
-		this.value.emitter.on('change', this.onValueChange_.bind(this));
+		this.value_ = config.value;
+		this.value_.emitter.on('change', this.onValueChange_.bind(this));
 
 		const trackElem = doc.createElement('div');
 		trackElem.classList.add(className('t'));
@@ -67,7 +68,7 @@ export class RangeSliderView implements ValueView<Interval> {
 	}
 
 	public update(): void {
-		const v = this.value.rawValue;
+		const v = this.value_.rawValue;
 
 		if (v.length === 0) {
 			this.element.classList.add(className(undefined, 'zero'));

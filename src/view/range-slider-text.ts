@@ -1,22 +1,20 @@
-import {Value} from 'tweakpane/lib/plugin/common/model/value';
-import {ClassName} from 'tweakpane/lib/plugin/common/view/class-name';
-import {ValueView} from 'tweakpane/lib/plugin/common/view/value';
-import {PointNdTextView} from 'tweakpane/lib/plugin/input-bindings/common/view/point-nd-text';
+import {ClassName} from 'tweakpane/lib/common/view/class-name';
+import {View} from 'tweakpane/lib/common/view/view';
+import {PointNdTextView} from 'tweakpane/lib/input-binding/common/view/point-nd-text';
 
-import {Interval} from '../model/interval';
 import {RangeSliderView} from './range-slider';
 
 interface Config {
 	sliderView: RangeSliderView;
-	textView: PointNdTextView<Interval>;
+	textView: PointNdTextView;
 }
 
 const className = ClassName('rsltxt');
 
-export class RangeSliderTextView implements ValueView<Interval> {
+export class RangeSliderTextView implements View {
 	public readonly element: HTMLElement;
 	private sliderView_: RangeSliderView;
-	private textView_: PointNdTextView<Interval>;
+	private textView_: PointNdTextView;
 
 	constructor(doc: Document, config: Config) {
 		this.sliderView_ = config.sliderView;
@@ -34,14 +32,5 @@ export class RangeSliderTextView implements ValueView<Interval> {
 		textElem.classList.add(className('t'));
 		textElem.appendChild(this.textView_.element);
 		this.element.appendChild(textElem);
-	}
-
-	get value(): Value<Interval> {
-		return this.sliderView_.value;
-	}
-
-	public update(): void {
-		this.sliderView_.update();
-		this.textView_.update();
 	}
 }

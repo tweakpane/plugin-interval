@@ -1,4 +1,4 @@
-import {BindingTarget} from 'tweakpane/lib/plugin/common/binding/target';
+import {BindingTarget} from 'tweakpane/lib/common/binding/target';
 
 import {Interval} from '../model/interval';
 

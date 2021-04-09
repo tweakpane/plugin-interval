@@ -1,11 +1,12 @@
-import {ValueController} from 'tweakpane/lib/plugin/common/controller/value';
-import {Value} from 'tweakpane/lib/plugin/common/model/value';
-import {mapRange} from 'tweakpane/lib/plugin/common/number-util';
+import {ValueController} from 'tweakpane/lib/common/controller/value';
+import {Value} from 'tweakpane/lib/common/model/value';
+import {ViewProps} from 'tweakpane/lib/common/model/view-props';
+import {mapRange} from 'tweakpane/lib/common/number-util';
 import {
 	PointerData,
 	PointerHandler,
 	PointerHandlerEvent,
-} from 'tweakpane/lib/plugin/common/view/pointer-handler';
+} from 'tweakpane/lib/common/view/pointer-handler';
 
 import {Interval} from '../model/interval';
 import {RangeSliderView} from '../view/range-slider';
@@ -14,6 +15,7 @@ interface Config {
 	maxValue: number;
 	minValue: number;
 	value: Value<Interval>;
+	viewProps: ViewProps;
 }
 
 type Grabbing = 'min' | 'length' | 'max';
@@ -21,6 +23,7 @@ type Grabbing = 'min' | 'length' | 'max';
 export class RangeSliderController implements ValueController<Interval> {
 	public readonly value: Value<Interval>;
 	public readonly view: RangeSliderView;
+	public readonly viewProps: ViewProps;
 	private maxValue_: number;
 	private minValue_: number;
 	private grabbing_: Grabbing | null = null;
@@ -33,12 +36,14 @@ export class RangeSliderController implements ValueController<Interval> {
 
 		this.maxValue_ = config.maxValue;
 		this.minValue_ = config.minValue;
+		this.viewProps = config.viewProps;
 
 		this.value = config.value;
 		this.view = new RangeSliderView(doc, {
 			maxValue: config.maxValue,
 			minValue: config.minValue,
 			value: this.value,
+			viewProps: config.viewProps,
 		});
 
 		const ptHandler = new PointerHandler(this.view.trackElement);
