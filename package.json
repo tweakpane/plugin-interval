@@ -1,6 +1,6 @@
 {
   "name": "tweakpane-plugin-interval",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Range slider control for Tweakpane",
   "main": "dist/tweakpane-plugin-interval.js",
   "types": "dist/types/index.d.ts",
