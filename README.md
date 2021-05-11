@@ -10,18 +10,19 @@
 <script src="tweakpane.min.js"></script>
 <scirpt src="tweakpane-plugin-interval.min.js"></script>
 <script>
-  const pane = new Tweakpane();
-  // ...
+  const pane = new Tweakpane.Pane();
+  pane.registerPlugin(TweakpaneIntervalPlugin);
 </script>
 ```
 
 
 ### Node.js
 ```js
-import Tweakpane from 'tweakpane';
-import 'tweakpane-plugin-interval';
+import {Pane} from 'tweakpane';
+import * as TweakpaneIntervalPlugin 'tweakpane-plugin-interval';
 
-const pane = new Tweakpane();
+const pane = new Pane();
+pane.registerPlugin(TweakpaneIntervalPlugin);
 // ...
 ```
 
@@ -33,6 +34,7 @@ const PARAMS = {
 };
 
 const pane = new Tweakpane();
+pane.registerPlugin(TweakpaneIntervalPlugin);
 
 pane.addInput(PARAMS, 'range', {
   min: 0,
