@@ -1,56 +1,33 @@
-import {IntervalConstraint} from 'constraint/interval';
-import {RangeSliderTextController} from 'controller/range-slider-text';
-import {intervalFromUnknown, writeInterval} from 'converter/interval';
-import {Interval, IntervalAssembly, IntervalObject} from 'model/interval';
 import {
+	BaseInputParams,
 	CompositeConstraint,
-	findConstraint,
-} from 'tweakpane/lib/common/constraint/composite';
-import {Constraint} from 'tweakpane/lib/common/constraint/constraint';
-import {RangeConstraint} from 'tweakpane/lib/common/constraint/range';
-import {
+	Constraint,
 	createNumberFormatter,
-	parseNumber,
-} from 'tweakpane/lib/common/converter/number';
-import {ValueMap} from 'tweakpane/lib/common/model/value-map';
-import {TpError} from 'tweakpane/lib/common/tp-error';
-import {
+	createRangeConstraint,
+	createStepConstraint,
+	findConstraint,
 	getBaseStep,
 	getSuitableDecimalDigits,
 	getSuitableDraggingScale,
-} from 'tweakpane/lib/common/util';
-import {PointNdTextController} from 'tweakpane/lib/input-binding/common/controller/point-nd-text';
-import {
-	createRangeConstraint,
-	createStepConstraint,
-} from 'tweakpane/lib/input-binding/number/plugin';
-import {InputBindingPlugin} from 'tweakpane/lib/input-binding/plugin';
+	InputBindingPlugin,
+	ParamsParsers,
+	parseNumber,
+	parseParams,
+	PointNdTextController,
+	RangeConstraint,
+	TpError,
+	ValueMap,
+} from '@tweakpane/core';
 
-interface IntervalInputParams {
+import {IntervalConstraint} from './constraint/interval';
+import {RangeSliderTextController} from './controller/range-slider-text';
+import {intervalFromUnknown, writeInterval} from './converter/interval';
+import {Interval, IntervalAssembly, IntervalObject} from './model/interval';
+
+interface IntervalInputParams extends BaseInputParams {
 	max?: number;
 	min?: number;
 	step?: number;
-}
-
-function fetchNumberParam(
-	params: Record<string, unknown>,
-	key: string,
-): number | undefined {
-	if (!(key in params)) {
-		return undefined;
-	}
-	const v = params[key];
-	return typeof v === 'number' ? v : undefined;
-}
-
-// Uses `Record<string, any>` instead of `Record<string, unknown>` to avoid unexpected error:
-// https://github.com/microsoft/TypeScript/issues/15300
-function typeParams(params: Record<string, any>): IntervalInputParams {
-	return {
-		max: fetchNumberParam(params, 'max'),
-		min: fetchNumberParam(params, 'min'),
-		step: fetchNumberParam(params, 'step'),
-	};
 }
 
 function createConstraint(params: IntervalInputParams): Constraint<Interval> {
@@ -67,21 +44,36 @@ function createConstraint(params: IntervalInputParams): Constraint<Interval> {
 	return new IntervalConstraint(new CompositeConstraint(constraints));
 }
 
-export const intervalInputPlugin: InputBindingPlugin<
+export const IntervalInputPlugin: InputBindingPlugin<
 	Interval,
-	IntervalObject
+	IntervalObject,
+	IntervalInputParams
 > = {
 	id: 'input-interval',
+	type: 'input',
 	css: '__css__',
 
-	accept: (exValue, _params) => {
-		return Interval.isObject(exValue)
-			? new Interval(exValue.min, exValue.max)
+	accept: (exValue, params) => {
+		if (!Interval.isObject(exValue)) {
+			return null;
+		}
+
+		const p = ParamsParsers;
+		const result = parseParams<IntervalInputParams>(params, {
+			max: p.optional.number,
+			min: p.optional.number,
+			step: p.optional.number,
+		});
+		return result
+			? {
+					initialValue: new Interval(exValue.min, exValue.max),
+					params: result,
+			  }
 			: null;
 	},
 	binding: {
 		reader: (_args) => intervalFromUnknown,
-		constraint: (args) => createConstraint(typeParams(args.params)),
+		constraint: (args) => createConstraint(args.params),
 		equals: Interval.equals,
 		writer: (_args) => writeInterval,
 	},
@@ -113,7 +105,7 @@ export const intervalInputPlugin: InputBindingPlugin<
 		const axis = {
 			baseStep: getBaseStep(c.edge),
 			constraint: c.edge,
-			textProps: new ValueMap({
+			textProps: ValueMap.fromObject({
 				draggingScale: midValue,
 				formatter: createNumberFormatter(
 					getSuitableDecimalDigits(c.edge, midValue),

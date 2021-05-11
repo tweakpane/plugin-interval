@@ -1,9 +1,11 @@
-import {Value} from 'tweakpane/lib/common/model/value';
-import {ViewProps} from 'tweakpane/lib/common/model/view-props';
-import {constrainRange, mapRange} from 'tweakpane/lib/common/number-util';
-import {ClassName} from 'tweakpane/lib/common/view/class-name';
-import {bindClassModifier} from 'tweakpane/lib/common/view/reactive';
-import {View} from 'tweakpane/lib/common/view/view';
+import {
+	ClassName,
+	constrainRange,
+	mapRange,
+	Value,
+	View,
+	ViewProps,
+} from '@tweakpane/core';
 
 import {Interval} from '../model/interval';
 
@@ -31,7 +33,7 @@ export class RangeSliderView implements View {
 
 		this.element = doc.createElement('div');
 		this.element.classList.add(className());
-		bindClassModifier(config.viewProps, this.element);
+		config.viewProps.bindClassModifiers(this.element);
 
 		this.value_ = config.value;
 		this.value_.emitter.on('change', this.onValueChange_.bind(this));

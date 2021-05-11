@@ -1,12 +1,11 @@
-import {ClassName} from 'tweakpane/lib/common/view/class-name';
-import {View} from 'tweakpane/lib/common/view/view';
-import {PointNdTextView} from 'tweakpane/lib/input-binding/common/view/point-nd-text';
+import {ClassName, PointNdTextController, View} from '@tweakpane/core';
 
+import {Interval} from '../model/interval';
 import {RangeSliderView} from './range-slider';
 
 interface Config {
 	sliderView: RangeSliderView;
-	textView: PointNdTextView;
+	textView: PointNdTextController<Interval>['view'];
 }
 
 const className = ClassName('rsltxt');
@@ -14,7 +13,7 @@ const className = ClassName('rsltxt');
 export class RangeSliderTextView implements View {
 	public readonly element: HTMLElement;
 	private sliderView_: RangeSliderView;
-	private textView_: PointNdTextView;
+	private textView_: PointNdTextController<InputEvent>['view'];
 
 	constructor(doc: Document, config: Config) {
 		this.sliderView_ = config.sliderView;

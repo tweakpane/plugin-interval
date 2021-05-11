@@ -12,7 +12,8 @@
 			test: {min: 16, max: 48},
 		};
 
-		const pane = new Tweakpane();
+		const pane = new Tweakpane.Pane();
+		pane.registerPlugin(TweakpaneIntervalPlugin);
 		pane.on('change', (ev) => {
 			console.log(ev.value);
 		});
@@ -23,6 +24,8 @@
 			max: 100,
 			step: 1,
 		});
+
+		window.pane = pane;
 	</script>
 </body>
 </html>

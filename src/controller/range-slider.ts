@@ -1,12 +1,12 @@
-import {ValueController} from 'tweakpane/lib/common/controller/value';
-import {Value} from 'tweakpane/lib/common/model/value';
-import {ViewProps} from 'tweakpane/lib/common/model/view-props';
-import {mapRange} from 'tweakpane/lib/common/number-util';
 import {
+	mapRange,
 	PointerData,
 	PointerHandler,
 	PointerHandlerEvent,
-} from 'tweakpane/lib/common/view/pointer-handler';
+	Value,
+	ValueController,
+	ViewProps,
+} from '@tweakpane/core';
 
 import {Interval} from '../model/interval';
 import {RangeSliderView} from '../view/range-slider';
@@ -20,7 +20,9 @@ interface Config {
 
 type Grabbing = 'min' | 'length' | 'max';
 
-export class RangeSliderController implements ValueController<Interval> {
+export class RangeSliderController
+	implements ValueController<Interval, RangeSliderView>
+{
 	public readonly value: Value<Interval>;
 	public readonly view: RangeSliderView;
 	public readonly viewProps: ViewProps;
