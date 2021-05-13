@@ -19,7 +19,7 @@
 ### Node.js
 ```js
 import {Pane} from 'tweakpane';
-import * as TweakpaneIntervalPlugin 'tweakpane-plugin-interval';
+import * as TweakpaneIntervalPlugin from '@tweakpane/plugin-interval';
 
 const pane = new Pane();
 pane.registerPlugin(TweakpaneIntervalPlugin);
