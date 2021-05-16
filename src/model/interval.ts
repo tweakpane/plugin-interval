@@ -1,4 +1,4 @@
-import {PointNdAssembly} from 'tweakpane/lib/input-binding/common/model/point-nd';
+import {PointNdAssembly} from '@tweakpane/core/dist/cjs/input-binding/common/model/point-nd';
 
 export interface IntervalObject {
 	max: number;

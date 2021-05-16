@@ -1,4 +1,4 @@
-import {Constraint} from 'tweakpane/lib/common/constraint/constraint';
+import {Constraint} from '@tweakpane/core';
 
 import {Interval} from '../model/interval';
 

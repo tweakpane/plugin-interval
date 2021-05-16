@@ -1,11 +1,13 @@
-import {Constraint} from 'tweakpane/lib/common/constraint/constraint';
-import {ValueController} from 'tweakpane/lib/common/controller/value';
-import {Formatter} from 'tweakpane/lib/common/converter/formatter';
-import {Parser} from 'tweakpane/lib/common/converter/parser';
-import {Value} from 'tweakpane/lib/common/model/value';
-import {ValueMap} from 'tweakpane/lib/common/model/value-map';
-import {ViewProps} from 'tweakpane/lib/common/model/view-props';
-import {PointNdTextController} from 'tweakpane/lib/input-binding/common/controller/point-nd-text';
+import {
+	Constraint,
+	Formatter,
+	Parser,
+	PointNdTextController,
+	Value,
+	ValueController,
+	ValueMap,
+	ViewProps,
+} from '@tweakpane/core';
 
 import {Interval, IntervalAssembly} from '../model/interval';
 import {RangeSliderTextView} from '../view/range-slider-text';
@@ -23,7 +25,9 @@ interface Config {
 	viewProps: ViewProps;
 }
 
-export class RangeSliderTextController implements ValueController<Interval> {
+export class RangeSliderTextController
+	implements ValueController<Interval, RangeSliderTextView>
+{
 	public readonly value: Value<Interval>;
 	public readonly view: RangeSliderTextView;
 	public readonly viewProps: ViewProps;
@@ -39,7 +43,7 @@ export class RangeSliderTextController implements ValueController<Interval> {
 		const axis = {
 			baseStep: config.baseStep,
 			constraint: config.constraint,
-			textProps: new ValueMap({
+			textProps: ValueMap.fromObject({
 				draggingScale: config.draggingScale,
 				formatter: config.formatter,
 			}),
