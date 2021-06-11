@@ -33,7 +33,7 @@ const PARAMS = {
   range: {min: 20, max: 80},
 };
 
-const pane = new Tweakpane();
+const pane = new Tweakpane.Pane();
 pane.registerPlugin(TweakpaneIntervalPlugin);
 
 pane.addInput(PARAMS, 'range', {
