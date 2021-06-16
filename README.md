@@ -1,3 +1,5 @@
+:warning: This project was integrated into [plugin-essentials](https://github.com/tweakpane/plugin-essentials).
+
 # tweakpane-plugin-interval
 [Tweakpane][tweakpane] plugin that provides a range slider control for an interval value.
 
